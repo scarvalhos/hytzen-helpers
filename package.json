@@ -6,8 +6,26 @@
   "types": "./src/index.ts",
   "author": "Samara Carvalho",
   "private": false,
+  "description": "Utilities helpers functions for react projects",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scarvalhos/hytzen-helpers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scarvalhos/hytzen-helpers/issues"
+  },
+  "homepage": "https://github.com/scarvalhos/hytzen-helpers#readme",
+  "keywords": [
+    "react",
+    "typescript",
+    "helpers",
+    "utils",
+    "react-utils",
+    "react-helpers"
+  ],
   "scripts": {
-    "build": "tsc ./src/index.ts --esModuleInterop --outDir ./dist"
+    "build": "rm -rf dist/ && tsc ./src/index.ts --esModuleInterop --outDir ./dist"
   },
   "devDependencies": {
     "@types/is-uuid": "^1.0.0",
@@ -37,14 +55,5 @@
   },
   "resolutions": {
     "webpack": "^5"
-  },
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/scarvalhos/hytzen-helpers.git"
-  },
-  "bugs": {
-    "url": "https://github.com/scarvalhos/hytzen-helpers/issues"
-  },
-  "homepage": "https://github.com/scarvalhos/hytzen-helpers#readme"
+  }
 }
