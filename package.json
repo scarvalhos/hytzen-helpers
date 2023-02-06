@@ -26,7 +26,6 @@
   ],
   "scripts": {
     "build": "rm -rf dist/ && tsc ./src/index.ts --esModuleInterop --outDir ./dist",
-    "prepare": "npx husky install",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"./src/**/*.{ts,tsx}\""
   },
@@ -51,7 +50,6 @@
   },
   "dependencies": {
     "dayjs": "^1.11.7",
-    "husky": "^8.0.3",
     "is-uuid": "^1.0.2",
     "object-path": "^0.11.8",
     "react": "^18.2.0",
