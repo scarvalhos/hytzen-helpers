@@ -1,9 +1,10 @@
 {
-  "name": "@hytzen/helpers",
+  "name": "@hyzten/helpers",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./src/index.ts",
   "author": "Samara Carvalho",
+  "private": false,
   "devDependencies": {
     "@types/is-uuid": "^1.0.0",
     "@types/object-path": "^0.11.1",
@@ -24,9 +25,25 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "dayjs": "^1.11.7",
+    "is-uuid": "^1.0.2",
+    "object-path": "^0.11.8",
+    "react-toastify": "^9.1.1"
   },
   "resolutions": {
     "webpack": "^5"
-  }
+  },
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scarvalhos/hytzen-helpers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scarvalhos/hytzen-helpers/issues"
+  },
+  "homepage": "https://github.com/scarvalhos/hytzen-helpers#readme"
 }
