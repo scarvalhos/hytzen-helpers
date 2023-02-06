@@ -2,9 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/hytzen-helpers.svg)](https://badge.fury.io/js/hytzen-helpers) [![Download Count](https://img.shields.io/npm/dm/hytzen-helpers.svg)](https://www.npmjs.com/package/hytzen-helpers) [![Bundle size](https://badgen.net/bundlephobia/minzip/hytzen-helpers)](https://bundlephobia.com/package/hytzen-helpers)
 
-Utilities helpers functions for react projects.
-
-Please note that the project is still under development.
+Helper functions for react projects.
 
 ## Getting started
 
