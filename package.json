@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist/ && tsc ./src/index.ts --esModuleInterop --outDir ./dist",
-    "prepare": "husky install",
+    "prepare": "npx husky install",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"./src/**/*.{ts,tsx}\""
   },
