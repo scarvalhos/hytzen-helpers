@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.map = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.c = exports.dedupTailwind = exports.makePrismaWhere = exports.getFirstName = exports.getFirstLetters = exports.defaultToastError = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.date = exports.money = void 0;
+exports.map = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.c = exports.concatClassNames = exports.makePrismaWhere = exports.getFirstName = exports.getFirstLetters = exports.defaultToastError = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.date = exports.percent = exports.money = void 0;
 var op = __importStar(require("object-path"));
 var relativeTime_1 = __importDefault(require("dayjs/plugin/relativeTime"));
 var duration_1 = __importDefault(require("dayjs/plugin/duration"));
@@ -65,6 +65,21 @@ var money = function (s, options) {
     });
 };
 exports.money = money;
+// money
+var percent = function (s, options) {
+    var num = 0;
+    if (typeof s === 'number') {
+        num = s;
+    }
+    else {
+        num = Number(s);
+    }
+    return (num / 100).toLocaleString((options === null || options === void 0 ? void 0 : options.locale) || 'pt-BR', {
+        style: 'percent',
+        maximumFractionDigits: (options === null || options === void 0 ? void 0 : options.maximumFractionDigits) || 3
+    });
+};
+exports.percent = percent;
 // date
 var date = function (value, options) {
     if (!value || value === '')
@@ -132,18 +147,27 @@ var defaultToastError = function (r) {
     react_toastify_1.toast.error(message);
 };
 exports.defaultToastError = defaultToastError;
+// getFirstLetters
 var getFirstLetters = function (value) {
-    // const parts = value?.split(' ')
-    // const [firstName, lastName] = parts
+    if (!value)
+        return [];
+    var parts = value === null || value === void 0 ? void 0 : value.split(' ');
+    if (parts.length > 1) {
+        var firstName = parts[0], lastName = parts[1];
+        return firstName.slice(0, 1).concat(lastName.slice(0, 1)).toUpperCase();
+    }
     return value.slice(0, 2).toUpperCase();
 };
 exports.getFirstLetters = getFirstLetters;
+// getFirstName
 var getFirstName = function (value) {
+    if (!value)
+        return [];
     var parts = value === null || value === void 0 ? void 0 : value.split(' ');
-    var firstName = (parts || [])[0];
-    return firstName;
+    return parts[0];
 };
 exports.getFirstName = getFirstName;
+// makePrismaWhere
 var makePrismaWhere = function (search, schema) {
     var _a, _b;
     var where = {};
@@ -166,10 +190,8 @@ var makePrismaWhere = function (search, schema) {
     return where;
 };
 exports.makePrismaWhere = makePrismaWhere;
-/**
- * This function concatenates classnames
- */
-var dedupTailwind = function (str) {
+// concatClassNames
+var concatClassNames = function (str) {
     var nonCollidable = ['border-', 'rounded-'];
     var speciallyCollidable = {
         'px-': ['p-'],
@@ -195,14 +217,13 @@ var dedupTailwind = function (str) {
     })
         .join(' ');
 };
-exports.dedupTailwind = dedupTailwind;
+exports.concatClassNames = concatClassNames;
 var c = function () {
     var arr = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         arr[_i] = arguments[_i];
     }
-    var classes = (0, exports.dedupTailwind)(arr
-        // eslint-disable-next-line no-extra-boolean-cast
+    var classes = (0, exports.concatClassNames)(arr
         .flatMap(function (s) { return (!!s ? s.split(/\s+/) : []); })
         .filter(function (s) { return !!s && s !== 'undefined'; })
         .join(' '));

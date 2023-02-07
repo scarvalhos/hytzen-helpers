@@ -12,6 +12,5 @@ export const useSkipFirstRender = (
     } else {
       callback()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callback, ...dependencies])
 }

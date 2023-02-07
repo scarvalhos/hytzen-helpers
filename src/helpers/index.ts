@@ -40,6 +40,26 @@ export const money = (
   })
 }
 
+// money
+
+export const percent = (
+  s?: string | number,
+  options?: { locale?: Locales; maximumFractionDigits?: number }
+) => {
+  let num = 0
+
+  if (typeof s === 'number') {
+    num = s
+  } else {
+    num = Number(s)
+  }
+
+  return (num / 100).toLocaleString(options?.locale || 'pt-BR', {
+    style: 'percent',
+    maximumFractionDigits: options?.maximumFractionDigits || 3,
+  })
+}
+
 // date
 
 export const date = (
@@ -126,21 +146,32 @@ export const defaultToastError = (r: any) => {
   toast.error(message)
 }
 
-export const getFirstLetters = (value: string) => {
-  // const parts = value?.split(' ')
+// getFirstLetters
 
-  // const [firstName, lastName] = parts
+export const getFirstLetters = (value?: string) => {
+  if (!value) return []
+
+  const parts = value?.split(' ')
+
+  if (parts.length > 1) {
+    const [firstName, lastName] = parts
+    return firstName.slice(0, 1).concat(lastName.slice(0, 1)).toUpperCase()
+  }
 
   return value.slice(0, 2).toUpperCase()
 }
 
+// getFirstName
+
 export const getFirstName = (value?: string) => {
+  if (!value) return []
+
   const parts = value?.split(' ')
 
-  const [firstName] = parts || []
-
-  return firstName
+  return parts[0]
 }
+
+// makePrismaWhere
 
 export const makePrismaWhere = (
   search: string,
@@ -167,11 +198,9 @@ export const makePrismaWhere = (
   return where
 }
 
-/**
- * This function concatenates classnames
- */
+// concatClassNames
 
-export const dedupTailwind = (str: string) => {
+export const concatClassNames = (str: string) => {
   const nonCollidable = ['border-', 'rounded-']
   const speciallyCollidable: Record<string, string[]> = {
     'px-': ['p-'],
@@ -205,9 +234,8 @@ export const dedupTailwind = (str: string) => {
 }
 
 export const c = (...arr: (string | undefined | null | false)[]) => {
-  const classes = dedupTailwind(
+  const classes = concatClassNames(
     arr
-      // eslint-disable-next-line no-extra-boolean-cast
       .flatMap((s) => (!!s ? s.split(/\s+/) : []))
       .filter((s) => !!s && s !== 'undefined')
       .join(' ')

@@ -23,7 +23,6 @@ var useSkipFirstRender = function (callback, dependencies) {
         else {
             callback();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, __spreadArray([callback], dependencies, true));
 };
 exports.useSkipFirstRender = useSkipFirstRender;
