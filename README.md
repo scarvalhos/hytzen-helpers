@@ -213,7 +213,6 @@ convertPXToVH('16px')
 
 Each PR should be specific and isolated to the issue you're trying to fix. Please do not stack features/chores/refactors/enhancements in one PR. Describe your feature/implementation in the PR. If you're unsure its useful or if it is a major change, please open an issue first and get feedback.
 
-- Follow eslint provided
 - Comment your code
 - Write [clean](https://github.com/ryanmcdermott/clean-code-javascript) code
 
@@ -221,4 +220,6 @@ Each PR should be specific and isolated to the issue you're trying to fix. Pleas
 
 MIT
 
-Feito com ❤️ Samara Carvalho 👋🏽 [Entre em contato!](https://www.linkedin.com/in/scarvalhos/)
+Made with ❤️ by Samara Carvalho
+
+👋🏽 [Entre em contato!](https://www.linkedin.com/in/samcarvalhos/)
