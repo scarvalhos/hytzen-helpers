@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.map = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.c = exports.concatClassNames = exports.makePrismaWhere = exports.getFirstName = exports.getFirstLetters = exports.defaultToastError = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.date = exports.percent = exports.money = void 0;
+exports.generateArrayWithXPositions = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.ctc = exports.concatTailwindClassNames = exports.makePrismaFilter = exports.getFirstName = exports.getFirstLetters = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.date = exports.percent = exports.money = void 0;
 var op = __importStar(require("object-path"));
 var relativeTime_1 = __importDefault(require("dayjs/plugin/relativeTime"));
 var duration_1 = __importDefault(require("dayjs/plugin/duration"));
@@ -43,7 +43,6 @@ var timezone_1 = __importDefault(require("dayjs/plugin/timezone"));
 var is_uuid_1 = __importDefault(require("is-uuid"));
 var dayjs_1 = __importDefault(require("dayjs"));
 var utc_1 = __importDefault(require("dayjs/plugin/utc"));
-var react_toastify_1 = require("react-toastify");
 require("dayjs/locale/pt-br");
 dayjs_1["default"].extend(utc_1["default"]);
 dayjs_1["default"].extend(timezone_1["default"]);
@@ -136,17 +135,6 @@ var generateMongoObjectId = function () {
             .toLowerCase());
 };
 exports.generateMongoObjectId = generateMongoObjectId;
-// defaultToastError
-var defaultToastError = function (r) {
-    var _a, _b;
-    var message = typeof r.response.data === 'string'
-        ? r.response.data
-        : typeof ((_a = r.response.data) === null || _a === void 0 ? void 0 : _a.message) === 'string'
-            ? (_b = r.response.data) === null || _b === void 0 ? void 0 : _b.message
-            : 'Não foi possível executar essa operação';
-    react_toastify_1.toast.error(message);
-};
-exports.defaultToastError = defaultToastError;
 // getFirstLetters
 var getFirstLetters = function (value) {
     if (!value)
@@ -168,7 +156,7 @@ var getFirstName = function (value) {
 };
 exports.getFirstName = getFirstName;
 // makePrismaWhere
-var makePrismaWhere = function (search, schema) {
+var makePrismaFilter = function (search, schema) {
     var _a, _b;
     var where = {};
     Object.entries(schema).forEach(function (_a) {
@@ -189,9 +177,9 @@ var makePrismaWhere = function (search, schema) {
     where.AND = (_b = where.AND) === null || _b === void 0 ? void 0 : _b.filter(Boolean);
     return where;
 };
-exports.makePrismaWhere = makePrismaWhere;
-// concatClassNames
-var concatClassNames = function (str) {
+exports.makePrismaFilter = makePrismaFilter;
+// concatTailwindClassNames
+var concatTailwindClassNames = function (str) {
     var nonCollidable = ['border-', 'rounded-'];
     var speciallyCollidable = {
         'px-': ['p-'],
@@ -217,19 +205,19 @@ var concatClassNames = function (str) {
     })
         .join(' ');
 };
-exports.concatClassNames = concatClassNames;
-var c = function () {
+exports.concatTailwindClassNames = concatTailwindClassNames;
+var ctc = function () {
     var arr = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         arr[_i] = arguments[_i];
     }
-    var classes = (0, exports.concatClassNames)(arr
+    var classes = (0, exports.concatTailwindClassNames)(arr
         .flatMap(function (s) { return (!!s ? s.split(/\s+/) : []); })
         .filter(function (s) { return !!s && s !== 'undefined'; })
         .join(' '));
     return classes.length < 1 ? undefined : classes;
 };
-exports.c = c;
+exports.ctc = ctc;
 // px2num
 var px2num = function (px) {
     if (typeof px === 'number')
@@ -263,16 +251,18 @@ exports.randonfy = randonfy;
 // generateArrayOfNumbers
 var generateArrayOfNumbers = function (from, to) {
     var array = [];
-    for (var i = from; i < to; i++) {
+    for (var i = from; i < to + 1; i++) {
         array.push(i);
     }
     return array;
 };
 exports.generateArrayOfNumbers = generateArrayOfNumbers;
-// map
-var map = function (arr, fn) {
-    if (!arr || !fn)
-        return null;
-    return arr.map(fn);
+// generateArrayWithXPositions
+var generateArrayWithXPositions = function (to) {
+    var array = [];
+    for (var i = 0; i < to; i++) {
+        array.push(i);
+    }
+    return array;
 };
-exports.map = map;
+exports.generateArrayWithXPositions = generateArrayWithXPositions;

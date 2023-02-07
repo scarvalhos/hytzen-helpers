@@ -8,11 +8,8 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
 import { Currency, Locales } from '../types'
-import { toast } from 'react-toastify'
 
 import 'dayjs/locale/pt-br'
-
-import React from 'react'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -133,19 +130,6 @@ export const generateMongoObjectId = function () {
   )
 }
 
-// defaultToastError
-
-export const defaultToastError = (r: any) => {
-  const message =
-    typeof r.response.data === 'string'
-      ? r.response.data
-      : typeof r.response.data?.message === 'string'
-      ? r.response.data?.message
-      : 'Não foi possível executar essa operação'
-
-  toast.error(message)
-}
-
 // getFirstLetters
 
 export const getFirstLetters = (value?: string) => {
@@ -173,7 +157,7 @@ export const getFirstName = (value?: string) => {
 
 // makePrismaWhere
 
-export const makePrismaWhere = (
+export const makePrismaFilter = (
   search: string,
   schema: { OR?: string[]; AND?: string[] }
 ) => {
@@ -198,9 +182,9 @@ export const makePrismaWhere = (
   return where
 }
 
-// concatClassNames
+// concatTailwindClassNames
 
-export const concatClassNames = (str: string) => {
+export const concatTailwindClassNames = (str: string) => {
   const nonCollidable = ['border-', 'rounded-']
   const speciallyCollidable: Record<string, string[]> = {
     'px-': ['p-'],
@@ -233,8 +217,8 @@ export const concatClassNames = (str: string) => {
     .join(' ')
 }
 
-export const c = (...arr: (string | undefined | null | false)[]) => {
-  const classes = concatClassNames(
+export const ctc = (...arr: (string | undefined | null | false)[]) => {
+  const classes = concatTailwindClassNames(
     arr
       .flatMap((s) => (!!s ? s.split(/\s+/) : []))
       .filter((s) => !!s && s !== 'undefined')
@@ -283,20 +267,21 @@ export const randonfy = <T>(array?: T[]) => {
 export const generateArrayOfNumbers = (from: number, to: number) => {
   const array: number[] = []
 
-  for (let i = from; i < to; i++) {
+  for (let i = from; i < to + 1; i++) {
     array.push(i)
   }
 
   return array
 }
 
-// map
+// generateArrayWithXPositions
 
-export const map = <T>(
-  arr?: T[],
-  fn?: (value: T) => React.ReactNode | Partial<T[]>
-) => {
-  if (!arr || !fn) return null
+export const generateArrayWithXPositions = (to: number) => {
+  const array: number[] = []
 
-  return arr.map(fn)
+  for (let i = 0; i < to; i++) {
+    array.push(i)
+  }
+
+  return array
 }

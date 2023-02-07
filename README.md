@@ -1,4 +1,4 @@
-# 🫰 hytzen-helpers
+# 📌 hytzen-helpers
 
 [![npm version](https://badge.fury.io/js/hytzen-helpers.svg)](https://badge.fury.io/js/hytzen-helpers) [![Download Count](https://img.shields.io/npm/dm/hytzen-helpers.svg)](https://www.npmjs.com/package/hytzen-helpers) [![Bundle size](https://badgen.net/bundlephobia/minzip/hytzen-helpers)](https://bundlephobia.com/package/hytzen-helpers)
 
@@ -14,97 +14,199 @@ npm install hytzen-helpers
 
 yarn:
 
-```
+```js
 yarn add hytzen-helpers
 ```
 
-## 📚 Examples
+## 📃 Documentation
+
+##### Helpers
+
+- `money`: Format a value to a currency shape.
+- `percent`: Format a value to a percentage shape.
+- `date`: Format a date string to specific shape.
+- `numonly`: Returns numeric characters only.
+- `numtostr`: Transform a number to a string.
+- `strtonum`: Transform a string to a number.
+- `randonfy`: Randomly change the order of an array.
+- `generateArrayOfNumbers`: Generate an array from x to y.
+- `generateArrayWithXPositions`: Generate an array with x positions.
+- `generateMongoObjectId`: Generate a random mongo object ID.
+- `getFirstLetters`: Return the two first letters of a string.
+- `getFirstName`: Return the first name of a string.
+- `ctc`: concat tailwind classNames.
+- `makePrismaFilter`: Generate a string filter for prisma queries.
+- `px2num`
+- `convertPXToREM`
+- `convertPXToVH`
+
+##### Hooks
+
+- `useSkipFirstRender`
+- `useBreakpoint`
+
+## 💻 Examples
 
 #### money()
 
-```
+```js
+money(100)
+
+// result: R$100,00
+
 money(100, {
-  locale: 'pt-BR',
-  currency: 'BRL'
+  locale: 'en-US',
+  currency: 'USD',
 })
 
-result: R$100,00
+// result: $100.00
 ```
 
----
+#### percent()
+
+```js
+percent(100)
+
+// result: 100%
+
+percent(0.2525, {
+  locale: 'pt-BR',
+  maximumFractionDigits: 2,
+})
+
+// result: 0.25%
+```
 
 #### date()
 
-```
+```js
+date(new Date().toString())
+
+// result: 01/01/2023
+
 date(new Date().toString(), {
-  type: 'digit'
+  type: 'digit' // 'digit' | 'long' | 'long-short'
   withHour: true
   onlyHour: false
 })
 
-result: 01/01/2023 às 12:00
+// result: 01/01/2023 às 12:00
 ```
-
-```
-date(new Date().toString(), {
-  onlyHour: true
-})
-
-result: 12:00
-```
-
-```
-date(new Date().toString(), {
-  type: 'digit'
-})
-
-result: 01/01/2023
-```
-
-```
-date(new Date().toString(), {
-  type: 'long'
-})
-
-result: 01, Janeiro de 2023
-```
-
-```
-date(new Date().toString(), {
-  type: 'long-short'
-})
-
-result: 01, jan/2023
-```
-
----
 
 #### numonly()
 
-```
+```js
 numonly('123.456.789-09')
 
-result: 12345678909
+// result: 12345678909
 ```
 
----
+#### numtostr()
+
+```js
+numtostr(123)
+
+// result: '123'
+```
+
+#### strtonum()
+
+```js
+strtonum('123')
+
+// result: 123
+```
 
 #### randonfy()
 
-```
-randonfy([1,2,3,4,5])
+```js
+randonfy([1, 2, 3, 4, 5])
 
-result: [3,5,1,4,2]
+// result: [3, 5, 1, 4, 2]
 ```
-
----
 
 #### generateArrayOfNumbers()
 
-```
-generateArrayOfNumbers(0, 4)
+```js
+generateArrayOfNumbers(1, 4)
 
-result: [1,2,3,4]
+// result: [1, 2, 3, 4]
+```
+
+#### generateArrayWithXPositions()
+
+```js
+generateArrayOfNumbers(4)
+
+// result: [0, 1, 2, 3]
+```
+
+#### generateMongoObjectId()
+
+```js
+generateMongoObjectId()
+
+// result: 63e2ab7da20f7c26aaab97e9
+```
+
+#### getFirstLetters()
+
+```js
+getFirstLetters('John Doe')
+
+// result: JD
+
+getFirstLetters('John')
+
+// result: JO
+```
+
+#### getFirstName()
+
+```js
+getFirstName('John Doe')
+
+// result: John
+```
+
+#### ctc()
+
+```xml
+<div className={c('w-full', 'bg-black')} />
+```
+
+#### makePrismaFilter()
+
+```js
+const filterString = JSON.stringify({
+  ...makePrismaFilter('johndoe', {
+    OR: ['username'],
+  }),
+})
+```
+
+#### px2num()
+
+```js
+px2num('16px')
+
+// result: 16
+```
+
+#### convertPXToREM()
+
+```js
+convertPXToREM('16px')
+
+// result: 1rem
+```
+
+#### convertPXToVH()
+
+```js
+convertPXToVH('16px')
+
+// result: 1.62vh
 ```
 
 ## ⭐ Contributing
