@@ -7,6 +7,7 @@ import isUUID from 'is-uuid'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
+import { Currency, Locales } from '../types'
 import { toast } from 'react-toastify'
 
 import 'dayjs/locale/pt-br'
@@ -21,7 +22,10 @@ dayjs.locale('pt-br')
 
 // money
 
-export const money = (s?: string | number) => {
+export const money = (
+  s?: string | number,
+  options?: { currency?: Currency; locale?: Locales }
+) => {
   let num = 0
 
   if (typeof s === 'number') {
@@ -30,9 +34,9 @@ export const money = (s?: string | number) => {
     num = Number(s)
   }
 
-  return (num || 0).toLocaleString('pt-BR', {
+  return (num || 0).toLocaleString(options?.locale || 'pt-BR', {
     style: 'currency',
-    currency: 'BRL',
+    currency: options?.currency || 'BRL',
   })
 }
 
@@ -74,11 +78,11 @@ export const date = (
   }
 }
 
-// strtonum
+// numonly
 
-export const strtonum = (s?: string | null): number => {
-  if (!s) return 0
-  return +s.replace(/[^\d,-]/g, '').replace(',', '.') || 0
+export const numonly = (s?: string | null) => {
+  if (!s) return null
+  return s.replace(/[^\d]+/g, '')
 }
 
 // numtostr
@@ -88,11 +92,11 @@ export const numtostr = (n?: number | null): string | undefined => {
   return n.toString()
 }
 
-// numonly
+// strtonum
 
-export const numonly = (s?: string | null) => {
-  if (!s) return null
-  return s.replace(/[^\d]+/g, '')
+export const strtonum = (s?: string | null): number => {
+  if (!s) return 0
+  return +s.replace(/[^\d,-]/g, '').replace(',', '.') || 0
 }
 
 // generateMongoObjectId
