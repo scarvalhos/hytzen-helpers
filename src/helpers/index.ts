@@ -81,17 +81,17 @@ export const date = (
   return withHour(new Date(value))
 }
 
-// validateEmail
+// isValidateEmail
 
-export const validateEmail = (email: string) => {
+export const isValidateEmail = (email: string) => {
   var emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/
 
   return emailRegex.test(email)
 }
 
-// validateCPF
+// isValidateCPF
 
-export const validateCPF = (value: string) => {
+export const isValidateCPF = (value: string) => {
   const cpf = value.replace(/[^\d]+/g, '')
 
   if (cpf == '') return false

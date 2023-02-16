@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.generateArrayWithXPositions = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.ctc = exports.concatTailwindClassNames = exports.makePrismaFilter = exports.getFirstName = exports.getFirstLetters = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.validateCPF = exports.validateEmail = exports.date = exports.percent = exports.money = void 0;
+exports.generateArrayWithXPositions = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.ctc = exports.concatTailwindClassNames = exports.makePrismaFilter = exports.getFirstName = exports.getFirstLetters = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.isValidateCPF = exports.isValidateEmail = exports.date = exports.percent = exports.money = void 0;
 var op = __importStar(require("object-path"));
 var is_uuid_1 = __importDefault(require("is-uuid"));
 // money
@@ -94,14 +94,14 @@ var date = function (value, options) {
     return withHour(new Date(value));
 };
 exports.date = date;
-// validateEmail
-var validateEmail = function (email) {
+// isValidateEmail
+var isValidateEmail = function (email) {
     var emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
     return emailRegex.test(email);
 };
-exports.validateEmail = validateEmail;
-// validateCPF
-var validateCPF = function (value) {
+exports.isValidateEmail = isValidateEmail;
+// isValidateCPF
+var isValidateCPF = function (value) {
     var cpf = value.replace(/[^\d]+/g, '');
     if (cpf == '')
         return false;
@@ -136,7 +136,7 @@ var validateCPF = function (value) {
         return false;
     return true;
 };
-exports.validateCPF = validateCPF;
+exports.isValidateCPF = isValidateCPF;
 // numonly
 var numonly = function (s) {
     if (!s)

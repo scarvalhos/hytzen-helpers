@@ -25,6 +25,8 @@ yarn add hytzen-helpers
 - `money`: Format a value to a currency shape.
 - `percent`: Format a value to a percentage shape.
 - `date`: Format a date string to specific shape.
+- `isValidateEmail`: Check if the input is valid email.
+- `isValidateCPF`: Check if the input is valid CPF.
 - `numonly`: Returns numeric characters only.
 - `numtostr`: Transform a number to a string.
 - `strtonum`: Transform a string to a number.
@@ -85,12 +87,33 @@ date(new Date().toString())
 // result: 01/01/2023
 
 date(new Date().toString(), {
-  type: 'digit' // 'digit' | 'long' | 'long-short'
+  locale: 'pt-BR',
+  dateStyle: 'short' // 'full' | 'long' | 'medium' | 'short'
   withHour: true
   onlyHour: false
 })
 
 // result: 01/01/2023 às 12:00
+```
+
+#### isValidateEmail()
+
+```js
+isValidateEmail('johndoe@mail.com')
+
+// result: true
+
+isValidateEmail('johndoe')
+
+// result: false
+```
+
+#### isValidateCPF()
+
+```js
+isValidateCPF('123.456.789-00')
+
+// result: false
 ```
 
 #### numonly()
