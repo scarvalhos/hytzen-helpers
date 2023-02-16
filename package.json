@@ -1,6 +1,6 @@
 {
   "name": "hytzen-helpers",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./src/index.ts",
@@ -25,7 +25,7 @@
     "react-helpers"
   ],
   "scripts": {
-    "build": "rm -rf dist/ && tsc ./src/index.ts --esModuleInterop --outDir ./dist",
+    "build": "rm -rf dist/ && tsc ./src/index.ts --esModuleInterop --jsx react-jsx --outDir ./dist",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --exit-child ./src/index.ts",
     "start": "node ./dist/index.js",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",

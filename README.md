@@ -44,8 +44,14 @@ yarn add hytzen-helpers
 
 ##### Hooks
 
-- `useSkipFirstRender`
 - `useBreakpoint`
+- `useSkipFirstRender`
+- `useLocalStorage`
+- `useToggle`
+- `useFetch`
+- `useKeyPress`
+- `useDebounce`
+- `useOnScreen`
 
 ## 💻 Examples
 
