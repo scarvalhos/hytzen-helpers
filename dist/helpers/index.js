@@ -35,20 +35,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.generateArrayWithXPositions = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.ctc = exports.concatTailwindClassNames = exports.makePrismaFilter = exports.getFirstName = exports.getFirstLetters = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.date = exports.percent = exports.money = void 0;
+exports.generateArrayWithXPositions = exports.generateArrayOfNumbers = exports.randonfy = exports.convertPXToVH = exports.convertPXToREM = exports.FONT_BASE = exports.px2num = exports.ctc = exports.concatTailwindClassNames = exports.makePrismaFilter = exports.getFirstName = exports.getFirstLetters = exports.generateMongoObjectId = exports.strtonum = exports.numtostr = exports.numonly = exports.validateCPF = exports.validateEmail = exports.date = exports.percent = exports.money = void 0;
 var op = __importStar(require("object-path"));
-var relativeTime_1 = __importDefault(require("dayjs/plugin/relativeTime"));
-var duration_1 = __importDefault(require("dayjs/plugin/duration"));
-var timezone_1 = __importDefault(require("dayjs/plugin/timezone"));
 var is_uuid_1 = __importDefault(require("is-uuid"));
-var dayjs_1 = __importDefault(require("dayjs"));
-var utc_1 = __importDefault(require("dayjs/plugin/utc"));
-require("dayjs/locale/pt-br");
-dayjs_1["default"].extend(utc_1["default"]);
-dayjs_1["default"].extend(timezone_1["default"]);
-dayjs_1["default"].extend(duration_1["default"]);
-dayjs_1["default"].extend(relativeTime_1["default"]);
-dayjs_1["default"].locale('pt-br');
 // money
 var money = function (s, options) {
     var num = 0;
@@ -64,7 +53,7 @@ var money = function (s, options) {
     });
 };
 exports.money = money;
-// money
+// percent
 var percent = function (s, options) {
     var num = 0;
     if (typeof s === 'number') {
@@ -83,26 +72,71 @@ exports.percent = percent;
 var date = function (value, options) {
     if (!value || value === '')
         return '-';
+    var locale = (options === null || options === void 0 ? void 0 : options.locale) || 'pt-BR';
+    var formatHour = function (v) {
+        return Intl.DateTimeFormat(locale, { timeStyle: 'short' })
+            .format(v)
+            .replace(':', 'h');
+    };
+    var formatDate = function (v) {
+        return Intl.DateTimeFormat(locale, {
+            dateStyle: options === null || options === void 0 ? void 0 : options.dateStyle
+        }).format(v);
+    };
     var withHour = function (v) {
         return {
-            "true": (options === null || options === void 0 ? void 0 : options.onlyHour)
-                ? (0, dayjs_1["default"])(value).utcOffset(-3).format('HH:mm')
-                : v.concat(" \u00E0s ".concat((0, dayjs_1["default"])(value).utcOffset(-3).format('HH:mm'))),
-            "false": v
-        }[String((options === null || options === void 0 ? void 0 : options.withHour) || (options === null || options === void 0 ? void 0 : options.onlyHour) || false)];
+            "true": formatDate(v).concat(" \u00E0s ".concat(formatHour(v))),
+            "false": formatDate(v)
+        }[String(Boolean(options === null || options === void 0 ? void 0 : options.withHour))];
     };
-    switch (options === null || options === void 0 ? void 0 : options.type) {
-        case 'long':
-            return withHour("".concat((0, dayjs_1["default"])(value).format('DD, MMMM'), " de ").concat((0, dayjs_1["default"])(value).format('YYYY')));
-        case 'long-short':
-            return withHour((0, dayjs_1["default"])(value).format('DD, MMM/YYYY'));
-        case 'digit':
-            return withHour((0, dayjs_1["default"])(value).format('DD/MM/YYYY'));
-        default:
-            return withHour((0, dayjs_1["default"])(value).format('DD/MM/YYYY'));
-    }
+    if (options === null || options === void 0 ? void 0 : options.onlyHour)
+        return formatHour(new Date(value));
+    return withHour(new Date(value));
 };
 exports.date = date;
+// validateEmail
+var validateEmail = function (email) {
+    var emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
+    return emailRegex.test(email);
+};
+exports.validateEmail = validateEmail;
+// validateCPF
+var validateCPF = function (value) {
+    var cpf = value.replace(/[^\d]+/g, '');
+    if (cpf == '')
+        return false;
+    if (cpf.length != 11 ||
+        cpf == '00000000000' ||
+        cpf == '11111111111' ||
+        cpf == '22222222222' ||
+        cpf == '33333333333' ||
+        cpf == '44444444444' ||
+        cpf == '55555555555' ||
+        cpf == '66666666666' ||
+        cpf == '77777777777' ||
+        cpf == '88888888888' ||
+        cpf == '99999999999')
+        return false;
+    var add = 0;
+    var rev = 0;
+    for (var i = 0; i < 9; i++)
+        add += parseInt(cpf.charAt(i)) * (10 - i);
+    rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+        rev = 0;
+    if (rev != parseInt(cpf.charAt(9)))
+        return false;
+    add = 0;
+    for (var i = 0; i < 10; i++)
+        add += parseInt(cpf.charAt(i)) * (11 - i);
+    rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+        rev = 0;
+    if (rev != parseInt(cpf.charAt(10)))
+        return false;
+    return true;
+};
+exports.validateCPF = validateCPF;
 // numonly
 var numonly = function (s) {
     if (!s)

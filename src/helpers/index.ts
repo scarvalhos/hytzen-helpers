@@ -1,21 +1,8 @@
 import * as op from 'object-path'
 
-import relativeTime from 'dayjs/plugin/relativeTime'
-import duration from 'dayjs/plugin/duration'
-import timezone from 'dayjs/plugin/timezone'
 import isUUID from 'is-uuid'
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
 
 import { Currency, Locales } from '../types'
-
-import 'dayjs/locale/pt-br'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.extend(duration)
-dayjs.extend(relativeTime)
-dayjs.locale('pt-br')
 
 // money
 
@@ -37,7 +24,7 @@ export const money = (
   })
 }
 
-// money
+// percent
 
 export const percent = (
   s?: string | number,
@@ -60,39 +47,85 @@ export const percent = (
 // date
 
 export const date = (
-  value?: string | number,
+  value?: string | number | Date,
   options?: {
-    type?: 'digit' | 'long' | 'long-short'
+    locale?: Locales
+    dateStyle?: 'full' | 'long' | 'medium' | 'short'
     withHour?: boolean
     onlyHour?: boolean
   }
 ) => {
   if (!value || value === '') return '-'
 
-  const withHour = (v: string) => {
+  const locale = options?.locale || 'pt-BR'
+
+  const formatHour = (v: Date) =>
+    Intl.DateTimeFormat(locale, { timeStyle: 'short' })
+      .format(v)
+      .replace(':', 'h')
+
+  const formatDate = (v: Date) =>
+    Intl.DateTimeFormat(locale, {
+      dateStyle: options?.dateStyle,
+    }).format(v)
+
+  const withHour = (v: Date) => {
     return {
-      true: options?.onlyHour
-        ? dayjs(value).utcOffset(-3).format('HH:mm')
-        : v.concat(` às ${dayjs(value).utcOffset(-3).format('HH:mm')}`),
-      false: v,
-    }[String(options?.withHour || options?.onlyHour || false)]
+      true: formatDate(v).concat(` às ${formatHour(v)}`),
+      false: formatDate(v),
+    }[String(Boolean(options?.withHour))]
   }
 
-  switch (options?.type) {
-    case 'long':
-      return withHour(
-        `${dayjs(value).format('DD, MMMM')} de ${dayjs(value).format('YYYY')}`
-      )
+  if (options?.onlyHour) return formatHour(new Date(value))
 
-    case 'long-short':
-      return withHour(dayjs(value).format('DD, MMM/YYYY'))
+  return withHour(new Date(value))
+}
 
-    case 'digit':
-      return withHour(dayjs(value).format('DD/MM/YYYY'))
+// validateEmail
 
-    default:
-      return withHour(dayjs(value).format('DD/MM/YYYY'))
-  }
+export const validateEmail = (email: string) => {
+  var emailRegex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/
+
+  return emailRegex.test(email)
+}
+
+// validateCPF
+
+export const validateCPF = (value: string) => {
+  const cpf = value.replace(/[^\d]+/g, '')
+
+  if (cpf == '') return false
+
+  if (
+    cpf.length != 11 ||
+    cpf == '00000000000' ||
+    cpf == '11111111111' ||
+    cpf == '22222222222' ||
+    cpf == '33333333333' ||
+    cpf == '44444444444' ||
+    cpf == '55555555555' ||
+    cpf == '66666666666' ||
+    cpf == '77777777777' ||
+    cpf == '88888888888' ||
+    cpf == '99999999999'
+  )
+    return false
+
+  let add = 0
+  let rev = 0
+
+  for (let i = 0; i < 9; i++) add += parseInt(cpf.charAt(i)) * (10 - i)
+  rev = 11 - (add % 11)
+  if (rev == 10 || rev == 11) rev = 0
+  if (rev != parseInt(cpf.charAt(9))) return false
+
+  add = 0
+  for (let i = 0; i < 10; i++) add += parseInt(cpf.charAt(i)) * (11 - i)
+  rev = 11 - (add % 11)
+  if (rev == 10 || rev == 11) rev = 0
+  if (rev != parseInt(cpf.charAt(10))) return false
+
+  return true
 }
 
 // numonly
