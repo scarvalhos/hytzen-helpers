@@ -22,3 +22,5 @@ __exportStar(require("./useFetch"), exports);
 __exportStar(require("./useKeyPress"), exports);
 __exportStar(require("./useDebounce"), exports);
 __exportStar(require("./useOnScreen"), exports);
+__exportStar(require("./useDevice"), exports);
+__exportStar(require("./useHover"), exports);
