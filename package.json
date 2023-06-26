@@ -54,6 +54,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@types/is-uuid": "^1.0.0",
+    "@types/object-path": "^0.11.1",
     "is-uuid": "^1.0.2",
     "object-path": "^0.11.8",
     "react": "^18.2.0",
